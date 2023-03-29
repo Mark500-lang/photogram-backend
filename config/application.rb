@@ -18,6 +18,7 @@ require "rails/test_unit/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+
 module PhotogramBackend
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -35,5 +36,10 @@ module PhotogramBackend
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore
+
+# Use SameSite=Strict for all cookies to help protect against CSRF
+    config.action_dispatch.cookies_same_site_protection = :strict
   end
 end
