@@ -1,8 +1,36 @@
 class CommentsController < ApplicationController
-    def index
-        @comments = Comment.all.order(created_at: :desc)
-        render json: @comments
+  before_action :set_post
+  #added
+  def index
+    post = Post.find(params[:post_id])
+    comments = post.comments
+    render json: comments
+  end
+
+  def create
+    post = Post.find(params[:post_id])
+    comment = post.comments.build(comment_params)
+    if comment.save
+      render json: comment, status: :created
+    else
+      render json: comment.errors, status: :unprocessable_entity
     end
+  end
+
+  private
+
+  def comment_params
+    params.require(:comment).permit(:body)
+  end
+
+
+
+
+
+    # def index
+    #     @comments = Comment.all.order(created_at: :desc)
+    #     render json: @comments
+    # end
 
     def show
         @comments = Comment.find(params[:id])
@@ -60,3 +88,7 @@ class CommentsController < ApplicationController
     end
 
 end
+
+
+
+

@@ -1,12 +1,24 @@
 class PostsController < ApplicationController
     #before_action :set_post, only: [:show, :destroy, :add_comment, :like]
     #before_action :set_current_user
+    
+    #added
+    def index
+      user = User.find_by(username: params[:username])
+      posts = user.posts
+      render json: posts, only: [:image, :caption]
+    end
+  
+    def show
+      post = Post.find(params[:id])
+      render json: post, only: [:image, :caption]
+    end
 
     # GET /posts
-    def index
-      @posts = Post.all
-      render json: @posts
-    end
+    # def index
+    #   @posts = Post.all
+    #   render json: @posts
+    # end
   
     # GET /posts/1
 
@@ -14,15 +26,15 @@ class PostsController < ApplicationController
         likes.count 
     end
 
-    def show
-        @post = Post.includes(:comments, :likes).find(params[:id])
+    # def show
+    #     @post = Post.includes(:comments, :likes).find(params[:id])
 
-        #@post = Post.find(params[:id])
-        #likes = @post.likes
-        #@comments = @post.comments.as_json(includes: :likes)
-        #render :json => @comments
-        render :json => @post
-    end
+    #     #@post = Post.find(params[:id])
+    #     #likes = @post.likes
+    #     #@comments = @post.comments.as_json(includes: :likes)
+    #     #render :json => @comments
+    #     render :json => @post
+    # end
       
   
     # POST /posts

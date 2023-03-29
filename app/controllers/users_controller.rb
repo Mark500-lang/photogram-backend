@@ -1,20 +1,36 @@
 # app/controllers/users_controller.rb
 class UsersController < ApplicationController
-    #before_action :logged_in_user, only: [:edit, :update, :destroy, :following, :followers]
-    #skip_before_action [:index]
+    before_action :logged_in_user, only: [:edit, :update, :destroy, :following, :followers]
+    # skip_before_action [:index]
     #before_action :correct_user, only: [:edit, :update]
+
+    #added
+    def show
+      user = User.find_by(username: params[:username])
+      render json: user, only: [:profile_pic, :username]
+    end
   
     def index
         @users = User.paginate(page: params[:page])
         render json: @users
     end
-  
-    def show
-      @user = User.find(params[:id])
-      render json: @user.as_json(include: :following)
-      #@posts = @user.posts.paginate(page: params[:page])
-      #render json: @posts
+    
+    def followers_count
+      user = User.find(params[:id])
+      render json: { followers_count: user.followers_count }
     end
+    
+    def following_count
+      user = User.find(params[:id])
+      render json: { following_count: user.following_count }
+    end
+  
+    # def show
+    #   @user = User.find(params[:id])
+    #   render json: @user.as_json(include: :following)
+    #   #@posts = @user.posts.paginate(page: params[:page])
+    #   #render json: @posts
+    # end
     #follow another user
   
     def follow
@@ -162,6 +178,27 @@ class UsersController < ApplicationController
     def correct_user
       @user = User.find(params[:id])
       redirect_to(root_url) unless current_user?(@user)
+    end
+    #added
+    # def loggedin
+    #   user =User.find_by(id: session[:user_id])
+    #   if (user)
+    #       render json: {loggedin: true, user: user}
+    #   else
+    #       render json: {loggedin: false}
+    #   end
+    # end
+
+#signu
+    def create
+      user = User.find_by(username: params[:username])
+      if user && user.authenticate(params[:password])
+        session[:user_id] = user.id
+        redirect_to root_path, notice: "Logged in!"
+      else
+        flash.now[:alert] = "Invalid username or password"
+        render :new
+      end
     end
   end
   

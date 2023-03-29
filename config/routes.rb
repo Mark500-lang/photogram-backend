@@ -8,6 +8,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+  get "/loggedin", to: "users#loggedin"
+
+  post "/login", to: "sessions#login"
+  delete "/logout", to: "sessions#logout"
 
   root to: 'posts#index'
   
@@ -47,5 +51,20 @@ Rails.application.routes.draw do
     end
   end
   
+   #added
+   get '/users/:username', to: 'users#show'
+
+   # Fetch post information
+   get '/posts/:id', to: 'posts#show'
+ 
+   # Fetch likes for the post
+   get '/posts/:id/likes', to: 'likes#index'
+ 
+   # Fetch like count for the post
+   get '/posts/:id/likes/count', to: 'likes#count'
+ 
+   # Comment component routes
+   resources :comments, only: [:create, :update, :destroy]
   
+   
 end

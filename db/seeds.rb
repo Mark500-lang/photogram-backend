@@ -6,11 +6,18 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 # Users
+
+User.destroy_all
+Post.destroy_all
+Like.destroy_all
+Comment.destroy_all
+Follow.destroy_all
+
 User.create!(
   name: 'John Doe',
   username: 'johndoe',
   email: 'johndoe@example.com',
-  password_digest: 'password123',
+  password_digest: '56789',
   profile_pic: 'https://picsum.photos/200',
   background_image: 'https://picsum.photos/1200/800',
   bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac commodo purus, et commodo eros. In hac habitasse platea dictumst. Nullam venenatis sem ac est fermentum, ut malesuada dui consequat. Sed bibendum velit vel ipsum iaculis, eget egestas nunc vestibulum.'
@@ -20,11 +27,21 @@ User.create!(
   name: 'Jane Doe',
   username: 'janedoe',
   email: 'janedoe@example.com',
-  password_digest: 'password123',
+  password_digest: '12346',
   profile_pic: 'https://picsum.photos/200',
   background_image: 'https://picsum.photos/1200/800',
   bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac commodo purus, et commodo eros. In hac habitasse platea dictumst. Nullam venenatis sem ac est fermentum, ut malesuada dui consequat. Sed bibendum velit vel ipsum iaculis, eget egestas nunc vestibulum.'
 )
+User.create!(
+  name: 'Bob Smith',
+  username: 'bobsmith',
+  email: 'bobsmith@example.com',
+  password_digest: 'abc123',
+  profile_pic: 'https://picsum.photos/200',
+  background_image: 'https://picsum.photos/1200/800',
+  bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac commodo purus, et commodo eros. In hac habitasse platea dictumst. Nullam venenatis sem ac est fermentum, ut malesuada dui consequat. Sed bibendum velit vel ipsum iaculis, eget egestas nunc vestibulum.'
+)
+
 
 # Posts
 Post.create!(
