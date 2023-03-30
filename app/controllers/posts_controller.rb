@@ -8,7 +8,6 @@ class PostsController < ApplicationController
 
     def like_count
         likes.count
-        likes.count
     end
 
     def show
