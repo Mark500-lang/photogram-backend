@@ -3,15 +3,12 @@ class PostsController < ApplicationController
     #before_action :set_current_user
 
 
-<<<<<<< HEAD
+
     # GET /posts
     def index
       @posts = Post.includes(:user, comments: :user).all
       render json: @posts.to_json(include: {user: {}, comments: {include: :user } })
-      @posts = Post.all
->>>>>>>>> Temporary merge branch 2
-      render json: @posts
->>>>>>> main
+
     end
 
 
@@ -19,17 +16,10 @@ class PostsController < ApplicationController
 
     def like_count
         likes.count
-        likes.count
     end
 
     def show
-        # @post = Post.includes(:comments, :likes).find(params[:id])
-
         @post = Post.find(params[:id])
-        #likes = @post.likes
-        # @comments = @post.comments.as_json(includes: :likes)
-        #render :json => @comments
-        # render :json => @post
         render json: @post, include: :comments
     end
 
@@ -43,7 +33,6 @@ class PostsController < ApplicationController
         render :new
       end
     end
-<<<<<<<<< Temporary merge branch 1
 
      # DELETE /posts/1
      def destroy
@@ -55,7 +44,7 @@ class PostsController < ApplicationController
         render json: { error: "Post not found" }, status: :not_found
       end
 
-=========
+
 
 
     # DELETE /posts/1
@@ -64,8 +53,6 @@ class PostsController < ApplicationController
       redirect_to posts_url, notice: 'Post was successfully destroyed.'
     end
 
-
->>>>>>>>> Temporary merge branch 2
     # POST /posts/1/comments
     def add_comment
       @comment = @post.comments.new(comment_params)

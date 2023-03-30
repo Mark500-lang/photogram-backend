@@ -47,13 +47,6 @@ end
   # end
 
 
-
-    def show
-        @comments = Comment.find(params[:id])
-        render json: @comments
-    end
-
-
     def comment_params
         params.require(:comment).permit(:body, :post_id).merge(user_id: @current_user.id)
     end
