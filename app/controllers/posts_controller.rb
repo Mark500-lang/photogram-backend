@@ -2,11 +2,18 @@ class PostsController < ApplicationController
     #before_action :set_post, only: [:show, :destroy, :add_comment, :like]
     #before_action :set_current_user
 
+<<<<<<< HEAD
 
     # GET /posts
     def index
       posts = Post.all
       render json: posts, include: :comments
+=======
+    # GET /posts
+    def index
+      @posts = Post.all
+      render json: @posts
+>>>>>>> main
     end
   
     # GET /posts/1
@@ -16,12 +23,22 @@ class PostsController < ApplicationController
     end
 
     def show
+<<<<<<< HEAD
         #@post = Post.includes(:comments, :likes).find(params[:id])
 
         @post = Post.find(params[:id])
         #likes = @post.likes
         render json: @post, include: :comments
         #render :json => @post
+=======
+        @post = Post.includes(:comments, :likes).find(params[:id])
+
+        #@post = Post.find(params[:id])
+        #likes = @post.likes
+        #@comments = @post.comments.as_json(includes: :likes)
+        #render :json => @comments
+        render :json => @post
+>>>>>>> main
     end
       
   
@@ -37,12 +54,37 @@ class PostsController < ApplicationController
   
     # DELETE /posts/1
     def destroy
+<<<<<<< HEAD
       post = Post.find_by(id: params[:id])
       if post
         post.destroy
         head :no_content
       else
         render json: { error: "Post not found" }, status: :not_found
+=======
+      @post.destroy
+      redirect_to posts_url, notice: 'Post was successfully destroyed.'
+    end
+  
+    # POST /posts/1/comments
+    def add_comment
+      @comment = @post.comments.new(comment_params)
+      @comment.user = current_user
+      if @comment.save
+        redirect_to @post, notice: 'Comment was successfully added.'
+      else
+        render :show
+      end
+    end
+  
+    # POST /posts/1/like
+    def like
+      @like = @post.likes.new(user: current_user)
+      if @like.save
+        redirect_to @post, notice: 'Post was successfully liked.'
+      else
+        render :show
+>>>>>>> main
       end
     end
   
@@ -60,6 +102,12 @@ class PostsController < ApplicationController
       params.require(:post).permit(:post_pic, :caption).merge(user: @current_user)
     end 
     
+<<<<<<< HEAD
   
+=======
+    def comment_params
+      params.permit(:comment, :post_id, :user_id)
+    end
+>>>>>>> main
   end
   

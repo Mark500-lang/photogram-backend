@@ -6,6 +6,7 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 # Users
+<<<<<<< HEAD
 User.destroy_all
 Post.destroy_all
 Like.destroy_all
@@ -22,6 +23,8 @@ User.create!(
   bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac commodo purus, et commodo eros. In hac habitasse platea dictumst. Nullam venenatis sem ac est fermentum, ut malesuada dui consequat. Sed bibendum velit vel ipsum iaculis, eget egestas nunc vestibulum.'
 )
 
+=======
+>>>>>>> main
 User.create!(
   name: 'John Doe',
   username: 'johndoe',
@@ -32,12 +35,20 @@ User.create!(
   bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac commodo purus, et commodo eros. In hac habitasse platea dictumst. Nullam venenatis sem ac est fermentum, ut malesuada dui consequat. Sed bibendum velit vel ipsum iaculis, eget egestas nunc vestibulum.'
 )
 
+<<<<<<< HEAD
 
 User.create!(
   name: 'Bob Smith',
   username: 'bobsmith',
   email: 'bobsmith@example.com',
   password_digest: 'abc123',
+=======
+User.create!(
+  name: 'Jane Doe',
+  username: 'janedoe',
+  email: 'janedoe@example.com',
+  password_digest: 'password123',
+>>>>>>> main
   profile_pic: 'https://picsum.photos/200',
   background_image: 'https://picsum.photos/1200/800',
   bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac commodo purus, et commodo eros. In hac habitasse platea dictumst. Nullam venenatis sem ac est fermentum, ut malesuada dui consequat. Sed bibendum velit vel ipsum iaculis, eget egestas nunc vestibulum.'
