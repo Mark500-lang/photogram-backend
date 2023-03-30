@@ -2,27 +2,41 @@ class PostsController < ApplicationController
     #before_action :set_post, only: [:show, :destroy, :add_comment, :like]
     #before_action :set_current_user
 
+<<<<<<< HEAD
+
+    # GET /posts
+    def index
+      posts = Post.all
+      render json: posts, include: :comments
+=======
     # GET /posts
     def index
       @posts = Post.includes(:user, comments: :user).all
       render json: @posts.to_json(include: {user: {}, comments: {include: :user } })
+      @posts = Post.all
+      render json: @posts
+>>>>>>> main
     end
+
 
     # GET /posts/1
 
     def like_count
+        likes.count
         likes.count
     end
 
     def show
         @post = Post.includes(:user, :comments, :likes).find(params[:id])
 
-        #@post = Post.find(params[:id])
+        @post = Post.find(params[:id])
         #likes = @post.likes
         #@comments = @post.comments.as_json(includes: :likes)
         #render :json => @comments
         render json: @post.to_json(include: {user: {}, comments: {include: :user } })
     end
+
+
 
 
     # POST /posts
@@ -35,11 +49,13 @@ class PostsController < ApplicationController
       end
     end
 
+
     # DELETE /posts/1
     def destroy
       @post.destroy
       redirect_to posts_url, notice: 'Post was successfully destroyed.'
     end
+
 
     # POST /posts/1/comments
     def add_comment
@@ -52,6 +68,7 @@ class PostsController < ApplicationController
       end
     end
 
+
     # POST /posts/1/like
     def like
       @like = @post.likes.new(user: current_user)
@@ -62,18 +79,23 @@ class PostsController < ApplicationController
       end
     end
 
+
     private
 
     #def set_current_user
         #@current_user = current_user
     #end
 
+
     def set_post
       @post = Post.find(params[:id])
     end
 
+
     def post_params
       params.require(:post).permit(:post_pic, :caption).merge(user: @current_user)
+    end
+
     end
 
     def comment_params
