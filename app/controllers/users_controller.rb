@@ -17,6 +17,7 @@ class UsersController < ApplicationController
     def show
       @user = User.find(params[:id])
       render json: @user.as_json(methods: :following_count)
+    end
 
 
     def followers_count
@@ -35,6 +36,7 @@ class UsersController < ApplicationController
     def following
        @following = User.find(params[:id]).following
        render json: @following
+    end
 
     def unfollow
       @user = User.find(params[:id])
