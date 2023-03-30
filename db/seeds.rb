@@ -4,10 +4,6 @@ User.destroy_all
 Post.destroy_all
 Comment.destroy_all
 
-# Users
-user1 = User.create!(username: 'MegtheeStallion', profile_pic: 'assets/img/img1.jpg')
-user2 = User.create!(username: 'NatureLover', profile_pic: 'assets/img/img4.jpg')
-user3 = User.create!(username: 'FoodieFan', profile_pic: 'assets/img/img6.jpg')
 
 # Posts
 post1 = Post.create!(caption: 'Catching Flights not feelings', post_pic: 'assets/img/img2.jpg', user: user1)

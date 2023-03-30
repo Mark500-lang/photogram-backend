@@ -1,10 +1,5 @@
 class User < ApplicationRecord
-<<<<<<< HEAD
-    has_secure_password
 
-
-=======
->>>>>>> main
     has_many :posts, dependent: :destroy
     has_many :likes, dependent: :destroy
     has_many :comments, dependent: :destroy
@@ -15,16 +10,8 @@ class User < ApplicationRecord
   
     has_many :following, through: :active_relationships, source: :following
     has_many :followers, through: :passive_relationships, source: :follower
-<<<<<<< HEAD
-    
-    def followers_count
-        followers.count
-    end
-      
-    def following_count
-        following.count
-    end
-=======
->>>>>>> main
+
+
   
 end
+    

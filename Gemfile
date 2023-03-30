@@ -6,7 +6,7 @@ ruby "2.7.4"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4", ">= 7.0.4.3"
 
-gem 'bcrypt'
+gem 'bcrypt-ruby', "3.0.1"
 
 gem 'will_paginate'
 

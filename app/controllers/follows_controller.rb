@@ -7,6 +7,7 @@ class FollowsController < ApplicationController
         render 'show_follow'
     end
 
+    private
     def user_params
         params.require(:user)
     end
