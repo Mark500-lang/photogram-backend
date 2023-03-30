@@ -15,33 +15,23 @@ class PostsController < ApplicationController
       render json: @posts
 >>>>>>> main
     end
-  
+
     # GET /posts/1
 
     def like_count
-        likes.count 
+        likes.count
     end
 
     def show
-<<<<<<< HEAD
         #@post = Post.includes(:comments, :likes).find(params[:id])
 
         @post = Post.find(params[:id])
         #likes = @post.likes
         render json: @post, include: :comments
         #render :json => @post
-=======
-        @post = Post.includes(:comments, :likes).find(params[:id])
-
-        #@post = Post.find(params[:id])
-        #likes = @post.likes
-        #@comments = @post.comments.as_json(includes: :likes)
-        #render :json => @comments
-        render :json => @post
->>>>>>> main
     end
-      
-  
+
+
     # POST /posts
     def create
       @post = Post.new(post_params)
@@ -51,21 +41,13 @@ class PostsController < ApplicationController
         render :new
       end
     end
-  
+
     # DELETE /posts/1
     def destroy
-<<<<<<< HEAD
-      post = Post.find_by(id: params[:id])
-      if post
-        post.destroy
-        head :no_content
-      else
-        render json: { error: "Post not found" }, status: :not_found
-=======
       @post.destroy
       redirect_to posts_url, notice: 'Post was successfully destroyed.'
     end
-  
+
     # POST /posts/1/comments
     def add_comment
       @comment = @post.comments.new(comment_params)
@@ -76,7 +58,7 @@ class PostsController < ApplicationController
         render :show
       end
     end
-  
+
     # POST /posts/1/like
     def like
       @like = @post.likes.new(user: current_user)
@@ -84,30 +66,24 @@ class PostsController < ApplicationController
         redirect_to @post, notice: 'Post was successfully liked.'
       else
         render :show
->>>>>>> main
       end
     end
-  
+
     private
 
     #def set_current_user
         #@current_user = current_user
     #end
-  
+
     def set_post
       @post = Post.find(params[:id])
     end
-  
+
     def post_params
       params.require(:post).permit(:post_pic, :caption).merge(user: @current_user)
-    end 
-    
-<<<<<<< HEAD
-  
-=======
+    end
+
     def comment_params
       params.permit(:comment, :post_id, :user_id)
     end
->>>>>>> main
   end
-  
