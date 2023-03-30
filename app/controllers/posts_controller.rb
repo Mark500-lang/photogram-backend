@@ -1,24 +1,13 @@
 class PostsController < ApplicationController
     #before_action :set_post, only: [:show, :destroy, :add_comment, :like]
     #before_action :set_current_user
-    
-    #added
-    def index
-      user = User.find_by(username: params[:username])
-      posts = user.posts
-      render json: posts, only: [:image, :caption]
-    end
   
-    def show
-      post = Post.find(params[:id])
-      render json: post, only: [:image, :caption]
-    end
 
     # GET /posts
-    # def index
-    #   @posts = Post.all
-    #   render json: @posts
-    # end
+    def index
+      @posts = Post.includes(:user,:comments,:like).find(params[:id])
+      render json: @posts
+    end
   
     # GET /posts/1
 
@@ -26,15 +15,16 @@ class PostsController < ApplicationController
         likes.count 
     end
 
-    # def show
-    #     @post = Post.includes(:comments, :likes).find(params[:id])
+    def show
+        # @post = Post.includes(:comments, :likes).find(params[:id])
 
-    #     #@post = Post.find(params[:id])
-    #     #likes = @post.likes
-    #     #@comments = @post.comments.as_json(includes: :likes)
-    #     #render :json => @comments
-    #     render :json => @post
-    # end
+        @post = Post.find(params[:id])
+        #likes = @post.likes
+        # @comments = @post.comments.as_json(includes: :likes)
+        #render :json => @comments
+        # render :json => @post
+        render json: @post, include: :comments
+    end
       
   
     # POST /posts
@@ -47,11 +37,15 @@ class PostsController < ApplicationController
       end
     end
   
-    # DELETE /posts/1
-    def destroy
-      @post.destroy
-      redirect_to posts_url, notice: 'Post was successfully destroyed.'
-    end
+     # DELETE /posts/1
+     def destroy
+      post = Post.find_by(id: params[:id])
+      if post
+        post.destroy
+        head :no_content
+      else
+        render json: { error: "Post not found" }, status: :not_found
+      end
   
     # POST /posts/1/comments
     def add_comment
