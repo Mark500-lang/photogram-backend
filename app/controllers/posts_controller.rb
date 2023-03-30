@@ -21,7 +21,7 @@ class PostsController < ApplicationController
         #likes = @post.likes
         #@comments = @post.comments.as_json(includes: :likes)
         #render :json => @comments
-        render json: @post.to_json(include: :user)
+        render json: @post.to_json(include: {user: {}, comments: {include: :user } })
     end
 
 
