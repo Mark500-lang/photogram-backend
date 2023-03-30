@@ -92,3 +92,5 @@ class PostsController < ApplicationController
       params.permit(:comment, :post_id, :user_id)
     end
   end
+end
+
