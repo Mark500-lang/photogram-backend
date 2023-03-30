@@ -3,7 +3,6 @@ class UsersController < ApplicationController
     # before_action :logged_in_user, only: [:edit, :update, :destroy, :following, :followers]
     # skip_before_action [:index]
     #before_action :correct_user, only: [:edit, :update]
-    # include ActionController::Flash
   
     def index
         @users = User.paginate(page: params[:page])
@@ -34,25 +33,7 @@ class UsersController < ApplicationController
       redirect_to @user
     end
     #unfollow another user
-    def unfollow
-      @user = User.find(params[:id])
-      @current_user.following.delete(@user) if @current_user.following.include?(@user)
-      redirect_to @user
-    end
-
-    #list followers
-    def followers 
-      @followers = User.find(params[:id]).followers
-      render json: @followers 
-    end
-    #list following
-    def following
-      @following = User.find(params[:id]).following
-      render json: @following
-    end
-
-
-    #creating user on signup page  
+    #signup new user to database
     # def create
     #   user = User.create(user_params)
     #   if user.valid?
@@ -72,7 +53,6 @@ class UsersController < ApplicationController
         render 'Please sign up first'
       end
     end
-
 
   def my_posts
     @posts = @current_user.posts
@@ -118,7 +98,14 @@ class UsersController < ApplicationController
 #   end
 # end
 
-  # def following
+      @user = User.find(params[:id])
+      if @user.update(user_params)
+        flash[:success] = "Profile updated"
+        redirect_to @user
+      else
+        render 'edit'
+      end
+
     #   @title = "Following"
     #   @following  = Follow.all
     #   render json: @following
@@ -131,16 +118,7 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
   private
-   
   
-  def users_params
-    params.permit(:name, :profile_pic, :background_image, :bio)
-  end
-
-  def user_params
-    params.permit(:name, :username, :email, :password, :password_confirmation, :bio)
-  end
-    
   
     # Before filters
   
