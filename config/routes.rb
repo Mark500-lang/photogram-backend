@@ -10,8 +10,8 @@ Rails.application.routes.draw do
   # root "articles#index"
   get "/loggedin", to: "users#loggedin"
 
-  post "/login", to: "sessions#login"
-  delete "/logout", to: "sessions#logout"
+  # post "/login", to: "sessions#login"
+  # delete "/logout", to: "sessions#logout"
 
   root to: 'posts#index'
   
@@ -26,6 +26,9 @@ Rails.application.routes.draw do
     resources :comments
   end
 
+  #route for editing user profile
+  resources :users, only: [:edit, :update]
+#will uncomment this
   resources :users do
     member do
       post :follow
@@ -66,5 +69,28 @@ Rails.application.routes.draw do
    # Comment component routes
    resources :comments, only: [:create, :update, :destroy]
   
+  #  root to: 'posts#index'
+  
+   get '/signup', to: 'users#new'
+   post '/signup', to: 'users#create'
    
+  # resource :profile, only: [:edit, :update]
+  # get '/profile/edit', to: 'profiles#edit', as: 'edit_profile'
+
+  # # Update profile action
+  # patch '/profile', to: 'profiles#update', as: 'update_profile'
+
+   #added for login
+   get 'login', to: 'sessions#new'
+  post 'login', to: 'sessions#create'
+  delete 'logout', to: 'sessions#destroy'
+
+
+  patch '/users/:id', to: 'users#update'
+
+  resources :users, only: [:edit, :update]
+  # get '/users/:id/edit', to: 'users#edit', as: 'edit_user'
+  
+  # # Custom route for updating a user
+  # patch '/users/:id', to: 'users#update', as: 'update_user'
 end
