@@ -10,7 +10,6 @@ gem 'bcrypt-ruby', "3.0.1"
 
 gem 'will_paginate'
 
-gem 'rack-cors'
 
 gem 'jwt'
 
