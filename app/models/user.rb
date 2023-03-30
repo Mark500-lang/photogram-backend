@@ -1,6 +1,7 @@
 class User < ApplicationRecord
 
     has_secure_password
+    # has_one_attached :avatar #added for edit profile
 
     has_many :posts, dependent: :destroy
     has_many :likes, dependent: :destroy
@@ -14,7 +15,7 @@ class User < ApplicationRecord
     has_many :followers, through: :passive_relationships, source: :follower
 
     validates :username, presence: true, length: {minimum: 4}, uniqueness: true
-    # validates :password_digest, presence: true, uniqueness: true 
+    #validates :password, presence: true, uniqueness: true 
 
     def followers_count
         followers.count
@@ -23,10 +24,6 @@ class User < ApplicationRecord
       def following_count
         following.count
       end
-
-  
-
-
   
 end
     
