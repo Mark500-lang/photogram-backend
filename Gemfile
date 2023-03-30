@@ -10,6 +10,7 @@ gem 'bcrypt'
 
 gem 'will_paginate'
 
+gem 'rack-cors'
 
 gem 'jwt'
 
