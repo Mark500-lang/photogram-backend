@@ -1,7 +1,5 @@
 class UsersController < ApplicationController
-    # before_action :logged_in_user, only: [:edit, :update, :destroy, :following, :followers]
-    # skip_before_action [:index]
-    #before_action :correct_user, only: [:edit, :update]
+    before_action only: [:edit, :update, :destroy, :following, :followers]
 
 
     def following_count

@@ -5,20 +5,22 @@ class CommentsController < ApplicationController
   def index
     @comments = Comment.all.order(created_at: :desc)
     render json: @comments
-end
+  end
 
-def show
+  
+  def show
     @comments = Comment.find(params[:id])
     render json: @comments
-end
-
+  end
   def create
     @post = Post.find(params[:post_id])
     if @post.nil?
       redirect_to posts_path, alert: 'Post not found.'
       return
     end
+  end
   
+  def update
     @comment = @post.comments.new(comment_params)
     @comment.user = @current_user
     if @comment.save
@@ -27,29 +29,28 @@ end
       render :show
     end
   end
-  def update
-    @comment = Comment.find(params[:id])
-    if @comment.update(comment_params)
-      redirect_to @comment.post, notice: 'Comment was successfully updated.'
-    else
-      render :edit
-    end
-end
 
-def edit
+  # def update
+  #   @comment = Comment.find(params[:id])
+  #   if @comment.update(comment_params)
+  #     redirect_to @comment.post, notice: 'Comment was successfully updated.'
+  #   else
+  #     render :edit
+  #   end
+  # end
+
+  def edit
     @comment = Comment.find(params[:id])
-end
+  end
 
   private
 
   # def comment_params
   #   params.require(:comment).permit(:content)
   # end
-
-
-    def comment_params
-        params.require(:comment).permit(:body, :post_id).merge(user_id: @current_user.id)
-    end
+  def comment_params
+      params.require(:comment).permit(:body, :post_id).merge(user_id: @current_user.id)
+  end
 
 end
 

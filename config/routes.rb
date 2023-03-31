@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   get "/loggedin", to: "users#loggedin"
+  patch '/posts/:id/comments', to: 'posts#update_comments'
+
 
   # post "/login", to: "sessions#login"
   # delete "/logout", to: "sessions#logout"
@@ -23,7 +25,7 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
 
   resources :posts do
-    resources :comments
+    resources :comments, only: [:create, :update, :destroy]
   end
 
   #route for editing user profile
@@ -38,9 +40,8 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :comments, only: [:edit, :update]
   resources :posts do
-    resources :comments, only: [:create, :index]
+    resources :comments, only: [:create, :index, :update]
     resources :likes, only: [:create]
   end
   
@@ -66,8 +67,6 @@ Rails.application.routes.draw do
    # Fetch like count for the post
    get '/posts/:id/likes/count', to: 'likes#count'
  
-   # Comment component routes
-   resources :comments, only: [:create, :update, :destroy]
   
   #  root to: 'posts#index'
   
@@ -81,7 +80,7 @@ Rails.application.routes.draw do
   # patch '/profile', to: 'profiles#update', as: 'update_profile'
 
    #added for login
-   get 'login', to: 'sessions#new'
+  get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
 
