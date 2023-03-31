@@ -1,23 +1,33 @@
 class CommentsController < ApplicationController
   # before_action :set_post
-  # before_action :authenticate_user!
+  before_action only: [:edit, :create, :destroy]
 
   def index
     @comments = Comment.all.order(created_at: :desc)
     render json: @comments
   end
 
-  
+
   def show
     @comments = Comment.find(params[:id])
     render json: @comments
   end
+
+
   def create
     @post = Post.find(params[:post_id])
-    if @post.nil?
-      redirect_to posts_path, alert: 'Post not found.'
-      return
-    end
+    @comment = @post.comments.create(comment_params.merge(user: @current_user))
+    redirect_to post_path(@post)
+  end
+
+  def update_comments
+    post = Post.find(comment_params[:post_id])
+    comments = comment_params[:comments]
+    
+    comments.each do |comment|
+      post.comments << comment
+    end  
+    render json: post
   end
   
   def update
@@ -30,14 +40,7 @@ class CommentsController < ApplicationController
     end
   end
 
-  # def update
-  #   @comment = Comment.find(params[:id])
-  #   if @comment.update(comment_params)
-  #     redirect_to @comment.post, notice: 'Comment was successfully updated.'
-  #   else
-  #     render :edit
-  #   end
-  # end
+  
 
   def edit
     @comment = Comment.find(params[:id])
@@ -45,11 +48,8 @@ class CommentsController < ApplicationController
 
   private
 
-  # def comment_params
-  #   params.require(:comment).permit(:content)
-  # end
   def comment_params
-      params.require(:comment).permit(:body, :post_id).merge(user_id: @current_user.id)
+    params.permit(:comment, :post_id, user_id: @current_user.id)
   end
 
 end
