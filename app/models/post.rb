@@ -4,4 +4,13 @@ class Post < ApplicationRecord
   accepts_nested_attributes_for :comments
   has_many :likes, dependent: :destroy
 
+
+
+
+
+  def likes_count
+    likes.count
+  end
+
+
 end

@@ -3,24 +3,17 @@ class PostsController < ApplicationController
     #before_action :set_current_user
 
 
-
     # GET /posts
     def index
       @posts = Post.includes(:user, comments: :user).all
-      render json: @posts.to_json(include: {user: {}, comments: {include: :user } })
-
+      render json: @posts.to_json(include: {user: {}, comments: {include: :user } }, methods: [:likes_count])
     end
 
 
     # GET /posts/1
-
-    def like_count
-        likes.count
-    end
-
     def show
         @post = Post.find(params[:id])
-        render json: @post, include: :comments
+        render json: @post, include: :comments, methods: [:likes_count]
     end
 
 
@@ -44,6 +37,7 @@ class PostsController < ApplicationController
         render json: { error: "Post not found" }, status: :not_found
       end
 
+    end
 
 
 
@@ -91,6 +85,6 @@ class PostsController < ApplicationController
     def comment_params
       params.permit(:comment, :post_id, :user_id)
     end
-  end
+
 end
 
