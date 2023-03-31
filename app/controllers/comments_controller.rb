@@ -1,5 +1,4 @@
 class CommentsController < ApplicationController
-  # before_action :set_post
   before_action only: [:edit, :create, :destroy]
 
   def index
@@ -39,8 +38,6 @@ class CommentsController < ApplicationController
       render :show
     end
   end
-
-  
 
   def edit
     @comment = Comment.find(params[:id])

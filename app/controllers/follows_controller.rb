@@ -11,6 +11,4 @@ class FollowsController < ApplicationController
     def user_params
         params.require(:user)
     end
-
-
 end
