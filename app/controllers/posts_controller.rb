@@ -1,16 +1,11 @@
 class PostsController < ApplicationController
-    #before_action :set_post, only: [:show, :destroy, :add_comment, :like]
-    #before_action :set_current_user
-
-
+    before_action :set_post, only: [:show, :destroy, :add_comment, :like]
 
     # GET /posts
     def index
       @posts = Post.includes(:user, comments: :user).all
       render json: @posts.to_json(include: {user: {}, comments: {include: :user } })
-
     end
-
 
     # GET /posts/1
 
@@ -23,10 +18,10 @@ class PostsController < ApplicationController
         render json: @post, include: :comments
     end
 
-
     # POST /posts
     def create
       @post = Post.new(post_params)
+      #@post.user_id = params[:id] # assuming you have a 'current_user' method that returns the user in session
       if @post.save
         redirect_to @post, notice: 'Post was successfully created.'
       else
@@ -46,24 +41,13 @@ class PostsController < ApplicationController
      end
 
 
-
     # DELETE /posts/1
     def destroy
       @post.destroy
       redirect_to posts_url, notice: 'Post was successfully destroyed.'
     end
-
-    # POST /posts/1/comments
-    def add_comment
-      @comment = @post.comments.new(comment_params)
-      @comment.user = current_user
-      if @comment.save
-        redirect_to @post, notice: 'Comment was successfully added.'
-      else
-        render :show
-      end
-    end
-
+    
+  
     # POST /posts/1/like
     def like
       @like = @post.likes.new(user: current_user)
@@ -73,6 +57,18 @@ class PostsController < ApplicationController
         render :show
       end
     end
+
+    def update_comments
+      post = Post.find(comment_params[:post_id])
+      comments = comment_params[:comments]
+      
+      comments.each do |comment|
+        post.comments << comment
+      end
+    
+      render json: post
+    end
+    
 
     private
 
@@ -85,10 +81,10 @@ class PostsController < ApplicationController
     end
 
     def post_params
-      params.require(:post).permit(:post_pic, :caption).merge(user: @current_user)
+      params.permit(:user_id, :post_pic, :caption)
     end
 
     def comment_params
-      params.permit(:comment, :post_id, :user_id)
+      params.permit(:comments, :post_id, :user_id)
     end
   end
