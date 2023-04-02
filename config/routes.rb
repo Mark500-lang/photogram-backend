@@ -17,8 +17,8 @@ Rails.application.routes.draw do
   patch '/posts/:id/comments', to: 'posts#update_comments'
 
 
-  # post "/login", to: "sessions#login"
-  # delete "/logout", to: "sessions#logout"
+  
+  
 
   root to: 'posts#index'
   
@@ -36,7 +36,7 @@ Rails.application.routes.draw do
 
   #route for editing user profile
   resources :users, only: [:edit, :update]
-#will uncomment this
+
   resources :users do
     member do
       post :follow
@@ -61,7 +61,7 @@ Rails.application.routes.draw do
     end
   end
   
-   #added
+  
    get '/users/:username', to: 'users#show'
 
    # Fetch post information
@@ -93,8 +93,5 @@ Rails.application.routes.draw do
   patch '/users/:id', to: 'users#update'
 
   resources :users, only: [:edit, :update]
-  # get '/users/:id/edit', to: 'users#edit', as: 'edit_user'
-  
-  # # Custom route for updating a user
-  # patch '/users/:id', to: 'users#update', as: 'update_user'
+ 
 end
