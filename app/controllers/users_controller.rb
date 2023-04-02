@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-    before_action only: [:edit, :update, :destroy, :following, :followers]
-
+    before_action only: [:edit, :index, :update, :destroy, :following, :followers, :show_current_user]
+    #skip_before_action :authorize, only: :create
 
     def following_count
       user = User.find(params[:id])
@@ -11,6 +11,36 @@ class UsersController < ApplicationController
         users = User.paginate(page: params[:page])
         render json: users, include: (:following)
     end
+
+    # def show_current_user
+    #   if session[:user_id]
+    #     user = User.find(session[:user_id])
+    #     response.set_header('Access-Control-Allow-Credentials', 'true')
+    #     render json: user
+    #   else
+    #     render json: {}, status: :unauthorized
+    #   end
+    # end
+    def logged_user
+      if session[:user_id]
+        user = User.find(session[:user_id])
+        render json: user, status: :ok, include: :posts
+      else
+        render json: { error: 'User not logged in' }, status: :unauthorized
+      end
+      response.set_header('Access-Control-Allow-Credentials', 'true')
+    end
+    
+    
+
+    # def show_current_user
+    #   user = User.find_by(id: session[:user_id])
+    #   if user
+    #     render json: user
+    #   else
+    #     render json: { error: "Not authorized" }, status: :unauthorized
+    #   end
+    # end
 
     def show
       @user = User.find(params[:id])
@@ -86,12 +116,14 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  def logged_in_user
-    unless logged_in?
-      flash[:danger] = "Please log in."
-      redirect_to login_url
-    end
-  end
+  # def loggedin
+  #   user = User.find_by(id: session[:user_id] ) 
+  #   if(user)
+  #      render json: {loggedin: true, user: user}, include: :posts
+  #   else
+  #      render json: {loggedin: false}
+  #   end      
+  # end
 
   # Confirms the correct user.
   def correct_user
@@ -99,11 +131,13 @@ class UsersController < ApplicationController
     redirect_to(root_url) unless current_user?(@user)
   end
 
-
-  def destroy
-    User.find(params[:id]).destroy
-    flash[:success] = "User deleted"
-    redirect_to users_url
+  def search
+    if params[:query].present?
+      @users = User.where("username LIKE ? OR name LIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
+    else
+      @users = User.none
+    end
+    render json: @users
   end
 
 
@@ -117,4 +151,4 @@ private
   end
 
 
-  end
+end

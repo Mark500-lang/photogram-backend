@@ -7,10 +7,36 @@
 
 # Rails.application.config.middleware.insert_before 0, Rack::Cors do
 #   allow do
-#     origins "example.com"
-#
-#     resource "*",
+#     origins "*"
+
+#     resource "http://localhost:3001/posts",
 #       headers: :any,
 #       methods: [:get, :post, :put, :patch, :delete, :options, :head]
 #   end
 # end
+
+# config/initializers/cors.rb
+
+# Rails.application.config.middleware.insert_before 0, Rack::Cors do
+#     allow do
+#       origins 'http://localhost:3001'
+  
+#       resource 'http://localhost:3000/logged_user',
+#         headers: :any,
+#         methods: [:get],
+#         credentials: true
+#     end
+# end
+
+# Rails.application.config.middleware.insert_before 0, Rack::Cors do
+#     allow do
+#       origins 'http://localhost:3001'
+#       resource '*',
+#         headers: :any,
+#         methods: [:get, :post, :put, :patch, :delete, :options, :head],
+#         credentials: true
+#     end
+#   end
+# end
+  
+  
