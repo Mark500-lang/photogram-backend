@@ -3,8 +3,7 @@ Rails.application.routes.draw do
   #resources :followers
   #resources :posts
   resources :users
-  #resources :comments
-
+  
   resources :posts do
     resources :comments, only: [:create, :update, :destroy]
   end
@@ -12,7 +11,9 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  get "/loggedin", to: "users#loggedin"
+  get '/users/search', to: 'users#search'
+  get '/logged_user', to: 'users#logged_user'
+  get "/logged_in", to: "sessions#logged_in"
   patch '/posts/:id/comments', to: 'posts#update_comments'
 
 
@@ -23,10 +24,11 @@ Rails.application.routes.draw do
   
   get '/signup', to: 'users#new'
   post '/signup', to: 'users#create'
-  
+  delete "/logout", to: "sessions#logout"
+
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
-  delete '/logout', to: 'sessions#destroy'
+  #delete '/logout', to: 'sessions#destroy'
 
   resources :posts do
     resources :comments, only: [:create, :update, :destroy]
@@ -86,7 +88,6 @@ Rails.application.routes.draw do
    #added for login
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
-  delete 'logout', to: 'sessions#destroy'
 
 
   patch '/users/:id', to: 'users#update'

@@ -19,26 +19,28 @@ class PostsController < ApplicationController
     end
 
     # POST /posts
-    def create
-      @post = Post.new(post_params)
-      #@post.user_id = params[:id] # assuming you have a 'current_user' method that returns the user in session
-      if @post.save
-        redirect_to @post, notice: 'Post was successfully created.'
-      else
-        render :new
-      end
+  def create
+    @post = Post.new(post_params)
+    @post.user_id = session[:user_id] # assuming you're using session-based authentication
+    if @post.save
+      redirect_to @post, notice: 'Post was successfully created.'
+    else
+      render :new
     end
+  end
 
-     # DELETE /posts/1
-     def destroy
-      post = Post.find_by(id: params[:id])
+
+
+  # DELETE /posts/1
+  def destroy
+    post = Post.find_by(id: params[:id])
       if post
         post.destroy
         head :no_content
       else
         render json: { error: "Post not found" }, status: :not_found
       end
-     end
+  end
 
 
     # DELETE /posts/1
@@ -50,7 +52,7 @@ class PostsController < ApplicationController
   
     # POST /posts/1/like
     def like
-      @like = @post.likes.new(user: current_user)
+      @like = @post.likes.new(user: @current_user)
       if @like.save
         redirect_to @post, notice: 'Post was successfully liked.'
       else
@@ -58,18 +60,8 @@ class PostsController < ApplicationController
       end
     end
 
-    def update_comments
-      post = Post.find(comment_params[:post_id])
-      comments = comment_params[:comments]
-      
-      comments.each do |comment|
-        post.comments << comment
-      end
+   
     
-      render json: post
-    end
-    
-
     private
 
     #def set_current_user
@@ -81,10 +73,8 @@ class PostsController < ApplicationController
     end
 
     def post_params
-      params.permit(:user_id, :post_pic, :caption)
+      params.permit(:post_pic, :caption)
     end
 
-    def comment_params
-      params.permit(:comments, :post_id, :user_id)
-    end
+   
   end

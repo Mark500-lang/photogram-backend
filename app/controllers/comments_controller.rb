@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
-  before_action only: [:edit, :create, :destroy]
+  # before_action :set_post
+  #before_action only: [:edit, :create, :destroy]
 
   def index
     @comments = Comment.all.order(created_at: :desc)
@@ -46,7 +47,7 @@ class CommentsController < ApplicationController
   private
 
   def comment_params
-    params.permit(:comment, :post_id, user_id: @current_user.id)
+    params.permit(:comment)
   end
 
 end
