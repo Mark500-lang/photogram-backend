@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
   resources :likes
   #resources :followers
-  #resources :posts
+  resources :posts
   resources :users
   
-  resources :posts do
-    resources :comments, only: [:create, :update, :destroy]
-  end
+  # resources :posts do
+  #   resources :comments, only: [:create, :update, :destroy]
+  # end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
@@ -30,9 +30,9 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   #delete '/logout', to: 'sessions#destroy'
 
-  resources :posts do
-    resources :comments, only: [:create, :update, :destroy]
-  end
+  # resources :posts do
+  #   resources :comments, only: [:create, :update, :destroy]
+  # end
 
   #route for editing user profile
   resources :users, only: [:edit, :update]
@@ -46,14 +46,14 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :posts do
-    resources :comments, only: [:create, :index, :update]
-    resources :likes, only: [:create]
-  end
+  # resources :posts do
+  #   resources :comments, only: [:create, :index, :update]
+  #   resources :likes, only: [:create]
+  # end
   
-  resources :posts, only: [:index, :show, :new, :create, :destroy] do
-    resources :likes, only: [:create]
-  end
+  # resources :posts, only: [:index, :show, :new, :create, :destroy] do
+  #   resources :likes, only: [:create]
+  # end
   
   resources :users, only: [:show] do
     member do

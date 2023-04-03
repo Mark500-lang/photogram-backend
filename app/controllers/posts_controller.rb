@@ -68,9 +68,9 @@ class PostsController < ApplicationController
         #@current_user = current_user
     #end
 
-    def set_post
-      @post = Post.find(params[:id])
-    end
+    # def set_post
+    #   @post = Post.find(params[:id])
+    # end
 
     def post_params
       params.permit(:post_pic, :caption)
