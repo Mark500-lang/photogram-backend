@@ -1,6 +1,9 @@
 # PHOTOGRAM - backend
 
-## Author
+## Authors
+Isaac Tonyloi
+Daisy Jebiwot
+Maggie Muriithi
 Mark Sangiriaki
 
 ## About
@@ -61,6 +64,3 @@ A like has the following relations:
 
 ### Follow Model
 - belongs to a user
-
-## MIT License
-Copyright (c) 2023 :Mark Sangiriaki
