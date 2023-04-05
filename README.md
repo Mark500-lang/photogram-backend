@@ -15,7 +15,7 @@ Ruby on rails backend for Phototgram, an instagram-like app for sharing photos w
 - Follow
 
 ## Getting Started
-To get started with the application, ensure you have Ruby (version 2.7.3) and Rails installed on your computer. You can install them by following the instructions provided in the following links:
+To get started with the application, ensure you have Ruby (version 2.7.4) and Rails installed on your computer. You can install them by following the instructions provided in the following links:
 - [install Ruby:](https://www.ruby-lang.org/en/documentation/installation/)
 - [install Rails:](https://guides.rubyonrails.org/getting_started.html#installing-rails)
 
